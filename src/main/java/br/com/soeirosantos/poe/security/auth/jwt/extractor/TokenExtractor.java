@@ -1,0 +1,7 @@
+package br.com.soeirosantos.poe.security.auth.jwt.extractor;
+
+public interface TokenExtractor {
+
+    String extract(String payload);
+
+}

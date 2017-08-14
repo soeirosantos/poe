@@ -1,0 +1,46 @@
+# ===================================================================
+# Ref: http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+spring:
+  application:
+    name: poe
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:file:./build/h2db/db/poe;DB_CLOSE_DELAY=-1
+    username: root
+    password: null
+    data: "classpath*:data.sql"
+  h2:
+    console:
+      enabled: false
+  jpa:
+    database-platform: br.com.soeirosantos.poe.core.config.FixedH2Dialect
+    database: H2
+    show-sql: true
+    properties:
+      hibernate.cache.use_second_level_cache: false
+      hibernate.generate_statistics: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+server:
+  port: 8080
+
+management:
+  context-path: /api/management
+  security:
+    roles: ROLE_ADMIN
+
+application:
+  security:
+    tokenExpirationTime: 15
+    refreshTokenExpTime: 60
+    tokenIssuer: http://poe.com.br
+    tokenSigningKey: xm8EV6Hy5RMFK4EEACIDAwQus
+  cryptContent:
+    salt: xpto
+    aesKeyIv: 1254845498412699

@@ -1,0 +1,6 @@
+# ======================================================
+# Sets dev profile as default if no profile is provided
+# ======================================================
+spring:
+  profiles:
+    active: dev
