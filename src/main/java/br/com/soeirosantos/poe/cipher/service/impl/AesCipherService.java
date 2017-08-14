@@ -28,7 +28,7 @@ class AesCipherService implements CipherService {
     @Override
     public String encrypt(String message, byte[] key) {
         Objects.requireNonNull(message, "Message cannot be null while encrypting");
-        String encryptedMessage = null;
+        String encryptedMessage;
         try {
             IvParameterSpec iv = new IvParameterSpec(KEY_IV.getBytes(StandardCharsets.UTF_8));
             SecretKeySpec secretKeySpec = new SecretKeySpec(key, ALGORITHM);
@@ -47,7 +47,7 @@ class AesCipherService implements CipherService {
     @Override
     public String decrypt(String encryptedMessage, byte[] key) {
         Objects.requireNonNull(encryptedMessage, "Message cannot be null while decrypting");
-        String decryptedMessage = null;
+        String decryptedMessage;
         try {
             IvParameterSpec iv = new IvParameterSpec(KEY_IV.getBytes(StandardCharsets.UTF_8));
             SecretKeySpec secretKeySpec = new SecretKeySpec(key, ALGORITHM);

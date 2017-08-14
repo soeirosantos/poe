@@ -12,10 +12,8 @@ import br.com.soeirosantos.poe.security.model.token.JwtTokenFactory;
 import br.com.soeirosantos.poe.security.model.token.RawAccessJwtToken;
 import br.com.soeirosantos.poe.security.model.token.RefreshToken;
 import br.com.soeirosantos.poe.security.service.UserService;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +44,7 @@ class RefreshTokenResource {
 
     @GetMapping(value = "/api/auth/token", produces = {MediaType.APPLICATION_JSON_VALUE})
     JwtToken refreshToken(HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException {
+        HttpServletResponse response) {
         String tokenPayload =
             tokenExtractor.extract(request.getHeader(WebSecurityConfig.JWT_TOKEN_HEADER));
 

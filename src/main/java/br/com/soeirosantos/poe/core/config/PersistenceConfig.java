@@ -1,8 +1,8 @@
 package br.com.soeirosantos.poe.core.config;
 
 import br.com.soeirosantos.poe.PoeApplication;
-import br.com.soeirosantos.poe.security.service.UserContextService;
 import br.com.soeirosantos.poe.core.services.impl.AuditorAwareImpl;
+import br.com.soeirosantos.poe.security.service.UserContextService;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;

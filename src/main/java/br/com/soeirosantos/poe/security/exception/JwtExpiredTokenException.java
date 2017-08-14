@@ -5,7 +5,7 @@ import org.springframework.security.core.AuthenticationException;
 
 public class JwtExpiredTokenException extends AuthenticationException {
 
-    private JwtToken token;
+    private final JwtToken token;
 
     public JwtExpiredTokenException(JwtToken token, String msg, Throwable t) {
         super(msg, t);
@@ -13,7 +13,7 @@ public class JwtExpiredTokenException extends AuthenticationException {
     }
 
     public String token() {
-        return this.token.getToken();
+        return token.getToken();
     }
 
 }

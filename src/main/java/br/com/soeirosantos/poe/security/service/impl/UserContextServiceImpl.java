@@ -1,6 +1,5 @@
 package br.com.soeirosantos.poe.security.service.impl;
 
-import br.com.soeirosantos.poe.security.auth.JwtAuthenticationToken;
 import br.com.soeirosantos.poe.security.model.UserContext;
 import br.com.soeirosantos.poe.security.service.UserContextService;
 import org.springframework.security.core.Authentication;

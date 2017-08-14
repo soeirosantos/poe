@@ -40,7 +40,7 @@ application:
     tokenExpirationTime: 15
     refreshTokenExpTime: 60
     tokenIssuer: http://poe.com.br
-    tokenSigningKey: xm8EV6Hy5RMFK4EEACIDAwQus
+    tokenSigningKey: xm8EV6Hy5RMFK4EEACIDAwQus #mocked dev only key
   cryptContent:
-    salt: xpto
-    aesKeyIv: 1254845498412699
+    salt: xpto #mocked dev only key
+    aesKeyIv: 1254845498412699 #mocked dev only key

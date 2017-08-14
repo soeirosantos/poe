@@ -8,7 +8,6 @@ import br.com.soeirosantos.poe.util.JwtToken;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.path.json.JsonPath;
-import org.codehaus.groovy.syntax.TokenUtil;
 import org.junit.Test;
 
 public class NotesITest {

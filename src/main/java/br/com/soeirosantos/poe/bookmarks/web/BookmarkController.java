@@ -2,7 +2,6 @@ package br.com.soeirosantos.poe.bookmarks.web;
 
 import br.com.soeirosantos.poe.bookmarks.domain.entity.Bookmark;
 import br.com.soeirosantos.poe.bookmarks.domain.repository.BookmarkRepository;
-import br.com.soeirosantos.poe.core.domain.repository.AbstractRepository;
 import br.com.soeirosantos.poe.core.web.AbstractController;
 import br.com.soeirosantos.poe.security.service.UserContextService;
 import org.springframework.context.ApplicationEventPublisher;

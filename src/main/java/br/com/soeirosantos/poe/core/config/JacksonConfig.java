@@ -2,9 +2,7 @@ package br.com.soeirosantos.poe.core.config;
 
 import br.com.soeirosantos.poe.tags.domain.entity.Tag;
 import br.com.soeirosantos.poe.tags.domain.entity.Tagable;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.util.Set;

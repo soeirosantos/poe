@@ -1,10 +1,9 @@
 package br.com.soeirosantos.poe.notes.domain.entity;
 
 import br.com.soeirosantos.poe.content.domain.entity.Content;
-import br.com.soeirosantos.poe.content.domain.entity.WithContent;
 import br.com.soeirosantos.poe.core.domain.entity.AbstractEntity;
 import br.com.soeirosantos.poe.tags.domain.entity.Tag;
-import br.com.soeirosantos.poe.tags.domain.entity.Tagable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -29,7 +28,7 @@ public class Note extends AbstractEntity<Long> {
     private Content content;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 
     @Override
     public void add(Tag tag) {

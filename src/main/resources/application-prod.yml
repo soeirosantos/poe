@@ -42,4 +42,7 @@ application:
     tokenExpirationTime: 15
     refreshTokenExpTime: 60
     tokenIssuer: http://poe.com.br
-    tokenSigningKey: xpto #todo: define token
+    tokenSigningKey: xpto #todo: define token as env variable
+  cryptContent:
+    salt: xpto #todo: provide salt as env variable
+    aesKeyIv: xpto #todo: provide 16 bytes key as env variable
