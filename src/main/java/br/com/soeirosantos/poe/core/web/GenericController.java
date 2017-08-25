@@ -23,13 +23,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-public abstract class AbstractController<T extends AbstractEntity<ID>, ID extends Serializable> {
+public class GenericController<T extends AbstractEntity<ID>, ID extends Serializable> {
 
     private final ApplicationEventPublisher publisher;
     private final AbstractRepository<T, ID> repository;
     private final UserContextService userContextService;
 
-    protected AbstractController(AbstractRepository<T, ID> repository,
+    public GenericController(AbstractRepository<T, ID> repository,
         ApplicationEventPublisher publisher,
         UserContextService userContextService) {
         this.repository = repository;
@@ -38,20 +38,20 @@ public abstract class AbstractController<T extends AbstractEntity<ID>, ID extend
     }
 
     @PostMapping
-    ResponseEntity<?> save(@Valid @RequestBody T entity,
+    public ResponseEntity<?> save(@Valid @RequestBody T entity,
         @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         publisher.publishEvent(new EncryptContentEvent(entity.getContent(), token));
         return new ResponseEntity<T>(repository.save(entity), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<?> get(@PathVariable ID id) {
+    public ResponseEntity<?> get(@PathVariable ID id) {
         throwsErrorIfNotFound(id);
         return ResponseEntity.ok(repository.findOne(id, userContextService.getUsername()));
     }
 
     @GetMapping("/{id}/decrypt")
-    ResponseEntity<?> decrypt(@PathVariable ID id,
+    public ResponseEntity<?> decrypt(@PathVariable ID id,
         @RequestHeader(name = ContentToken.HEADER_NAME) String token) {
         throwsErrorIfNotFound(id);
         T entity = repository.findOne(id, userContextService.getUsername());
@@ -60,12 +60,12 @@ public abstract class AbstractController<T extends AbstractEntity<ID>, ID extend
     }
 
     @GetMapping
-    ResponseEntity<?> list(Pageable pageable) {
+    public ResponseEntity<?> list(Pageable pageable) {
         return ResponseEntity.ok(repository.findAll(userContextService.getUsername(), pageable));
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<?> update(@PathVariable ID id, @RequestBody T entity,
+    public ResponseEntity<?> update(@PathVariable ID id, @RequestBody T entity,
         @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         throwsErrorIfNotFound(id);
         publisher.publishEvent(new EncryptContentEvent(entity.getContent(), token));
@@ -73,14 +73,14 @@ public abstract class AbstractController<T extends AbstractEntity<ID>, ID extend
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<?> delete(@PathVariable ID id) {
+    public ResponseEntity<?> delete(@PathVariable ID id) {
         throwsErrorIfNotFound(id);
         repository.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/tags")
-    ResponseEntity<?> addTag(@PathVariable ID id, @RequestBody List<Tag> tags) {
+    public ResponseEntity<?> addTag(@PathVariable ID id, @RequestBody List<Tag> tags) {
         throwsErrorIfNotFound(id);
         T entity = repository.findOne(id, userContextService.getUsername());
         tags.forEach(t -> entity.add(t));
@@ -89,14 +89,14 @@ public abstract class AbstractController<T extends AbstractEntity<ID>, ID extend
     }
 
     @GetMapping("/{id}/tags")
-    ResponseEntity<?> getTags(@PathVariable ID id) {
+    public ResponseEntity<?> getTags(@PathVariable ID id) {
         throwsErrorIfNotFound(id);
         T entity = repository.findOne(id, userContextService.getUsername());
         return ResponseEntity.ok(entity.getTags());
     }
 
     @DeleteMapping("/{id}/tags")
-    ResponseEntity<?> removeTags(@PathVariable ID id, @RequestBody List<Tag> tags) {
+    public ResponseEntity<?> removeTags(@PathVariable ID id, @RequestBody List<Tag> tags) {
         throwsErrorIfNotFound(id);
         T entity = repository.findOne(id, userContextService.getUsername());
         tags.forEach(t -> entity.remove(t));
