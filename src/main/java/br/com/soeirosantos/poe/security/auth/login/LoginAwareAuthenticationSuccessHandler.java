@@ -1,4 +1,4 @@
-package br.com.soeirosantos.poe.security.auth.ajax;
+package br.com.soeirosantos.poe.security.auth.login;
 
 import br.com.soeirosantos.poe.security.model.UserContext;
 import br.com.soeirosantos.poe.security.model.token.JwtToken;
@@ -19,12 +19,12 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 @Component
-class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+class LoginAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final ObjectMapper mapper;
     private final JwtTokenFactory tokenFactory;
 
-    AjaxAwareAuthenticationSuccessHandler(ObjectMapper mapper, JwtTokenFactory tokenFactory) {
+    LoginAwareAuthenticationSuccessHandler(ObjectMapper mapper, JwtTokenFactory tokenFactory) {
         this.mapper = mapper;
         this.tokenFactory = tokenFactory;
     }

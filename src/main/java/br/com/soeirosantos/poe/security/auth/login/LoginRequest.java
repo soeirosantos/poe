@@ -1,4 +1,4 @@
-package br.com.soeirosantos.poe.security.auth.ajax;
+package br.com.soeirosantos.poe.security.auth.login;
 
 import lombok.Getter;
 

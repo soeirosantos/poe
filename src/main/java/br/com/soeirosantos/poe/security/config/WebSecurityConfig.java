@@ -1,7 +1,7 @@
 package br.com.soeirosantos.poe.security.config;
 
-import br.com.soeirosantos.poe.security.auth.ajax.AjaxAuthenticationProvider;
-import br.com.soeirosantos.poe.security.auth.ajax.AjaxLoginProcessingFilter;
+import br.com.soeirosantos.poe.security.auth.login.LoginAuthenticationProvider;
+import br.com.soeirosantos.poe.security.auth.login.LoginProcessingFilter;
 import br.com.soeirosantos.poe.security.auth.jwt.JwtAuthenticationProvider;
 import br.com.soeirosantos.poe.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
 import br.com.soeirosantos.poe.security.auth.jwt.SkipPathRequestMatcher;
@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationFailureHandler failureHandler;
 
     @Autowired
-    private AjaxAuthenticationProvider ajaxAuthenticationProvider;
+    private LoginAuthenticationProvider loginAuthenticationProvider;
 
     @Autowired
     private JwtAuthenticationProvider jwtAuthenticationProvider;
@@ -59,8 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ObjectMapper objectMapper;
 
-    protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter() {
-        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(
+    protected LoginProcessingFilter buildAjaxLoginProcessingFilter() {
+        LoginProcessingFilter filter = new LoginProcessingFilter(
             FORM_BASED_LOGIN_ENTRY_POINT,
             successHandler, failureHandler, objectMapper);
         filter.setAuthenticationManager(this.authenticationManager);
@@ -86,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(ajaxAuthenticationProvider);
+        auth.authenticationProvider(loginAuthenticationProvider);
         auth.authenticationProvider(jwtAuthenticationProvider);
     }
 

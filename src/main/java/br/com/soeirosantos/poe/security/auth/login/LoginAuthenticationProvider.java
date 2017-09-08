@@ -1,4 +1,4 @@
-package br.com.soeirosantos.poe.security.auth.ajax;
+package br.com.soeirosantos.poe.security.auth.login;
 
 import br.com.soeirosantos.poe.security.domain.entity.User;
 import br.com.soeirosantos.poe.security.model.UserContext;
@@ -19,12 +19,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @Component
-public class AjaxAuthenticationProvider implements AuthenticationProvider {
+public class LoginAuthenticationProvider implements AuthenticationProvider {
 
     private final BCryptPasswordEncoder encoder;
     private final UserService userService;
 
-    AjaxAuthenticationProvider(UserService userService, BCryptPasswordEncoder encoder) {
+    LoginAuthenticationProvider(UserService userService, BCryptPasswordEncoder encoder) {
         this.userService = userService;
         this.encoder = encoder;
     }

@@ -1,4 +1,4 @@
-package br.com.soeirosantos.poe.security.auth.ajax;
+package br.com.soeirosantos.poe.security.auth.login;
 
 import br.com.soeirosantos.poe.security.exception.AuthMethodNotSupportedException;
 import br.com.soeirosantos.poe.security.exception.JwtExpiredTokenException;
@@ -17,11 +17,11 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component;
 
 @Component
-class AjaxAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
+class LoginAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     private final ObjectMapper mapper;
 
-    AjaxAwareAuthenticationFailureHandler(ObjectMapper mapper) {
+    LoginAwareAuthenticationFailureHandler(ObjectMapper mapper) {
         this.mapper = mapper;
     }
 

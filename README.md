@@ -29,3 +29,5 @@ Example Request (replace `replace-me-with-a-json-web-token` by the token got fro
 ```
 curl -X GET -H "Authorization: Bearer replace-me-with-a-json-web-token" -H "Cache-Control: no-cache" "http://localhost:8080/api/me"
 ```
+
+TODO: Configure db migrations using Flyway

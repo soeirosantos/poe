@@ -1,4 +1,4 @@
-package br.com.soeirosantos.poe.security.auth.ajax;
+package br.com.soeirosantos.poe.security.auth.login;
 
 import br.com.soeirosantos.poe.security.exception.AuthMethodNotSupportedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,13 +20,13 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Slf4j
-public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
+public class LoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
     private final ObjectMapper objectMapper;
 
-    public AjaxLoginProcessingFilter(String defaultProcessUrl,
+    public LoginProcessingFilter(String defaultProcessUrl,
         AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler,
         ObjectMapper mapper) {
         super(defaultProcessUrl);
