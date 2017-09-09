@@ -24,39 +24,22 @@ public class LoginProcessingFilter extends AbstractAuthenticationProcessingFilte
 
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
-    private final ObjectMapper objectMapper;
+    private final UsernamePasswordExtractor extractor;
 
     public LoginProcessingFilter(String defaultProcessUrl,
         AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler,
-        ObjectMapper mapper) {
+        UsernamePasswordExtractor extractor) {
         super(defaultProcessUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
-        this.objectMapper = mapper;
+        this.extractor = extractor;
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
         HttpServletResponse response)
         throws AuthenticationException, IOException, ServletException {
-        if (!HttpMethod.POST.name().equals(request.getMethod())) {
-            if (log.isDebugEnabled()) {
-                log.debug(
-                    "Authentication method not supported. Request method: " + request.getMethod());
-            }
-            throw new AuthMethodNotSupportedException("Authentication method not supported");
-        }
-
-        LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
-
-        if (StringUtils.isBlank(loginRequest.getUsername())
-            || StringUtils.isBlank(loginRequest.getPassword())) {
-            throw new AuthenticationServiceException("Username or Password not provided");
-        }
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-            loginRequest.getUsername(), loginRequest.getPassword());
-
+        Authentication token = extractor.extract(request);
         return this.getAuthenticationManager().authenticate(token);
     }
 

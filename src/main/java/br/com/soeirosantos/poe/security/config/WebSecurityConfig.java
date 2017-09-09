@@ -1,14 +1,14 @@
 package br.com.soeirosantos.poe.security.config;
 
-import br.com.soeirosantos.poe.security.auth.login.LoginAuthenticationProvider;
-import br.com.soeirosantos.poe.security.auth.login.LoginProcessingFilter;
 import br.com.soeirosantos.poe.security.auth.jwt.JwtAuthenticationProvider;
 import br.com.soeirosantos.poe.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
 import br.com.soeirosantos.poe.security.auth.jwt.SkipPathRequestMatcher;
 import br.com.soeirosantos.poe.security.auth.jwt.extractor.TokenExtractor;
+import br.com.soeirosantos.poe.security.auth.login.LoginAuthenticationProvider;
+import br.com.soeirosantos.poe.security.auth.login.LoginProcessingFilter;
+import br.com.soeirosantos.poe.security.auth.login.UsernamePasswordExtractor;
 import br.com.soeirosantos.poe.security.domain.entity.Role;
 import br.com.soeirosantos.poe.security.rest.RestAuthenticationEntryPoint;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +54,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private TokenExtractor tokenExtractor;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private UsernamePasswordExtractor usernamePasswordExtractor;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private AuthenticationManager authenticationManager;
 
     @Bean
     @Override
@@ -100,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private LoginProcessingFilter buildAjaxLoginProcessingFilter() {
         LoginProcessingFilter filter = new LoginProcessingFilter(
             FORM_BASED_LOGIN_ENTRY_POINT,
-            successHandler, failureHandler, objectMapper);
+            successHandler, failureHandler, usernamePasswordExtractor);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }
