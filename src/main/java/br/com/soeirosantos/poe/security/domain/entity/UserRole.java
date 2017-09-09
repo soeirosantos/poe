@@ -1,34 +1,23 @@
 package br.com.soeirosantos.poe.security.domain.entity;
 
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor(staticName = "of")
+@NoArgsConstructor
 @Entity
 public class UserRole {
 
-    @Embeddable
-    public static class Id implements Serializable {
-
-        @Column(name = "USER_ID")
-        private Long userId;
-
-        @Enumerated(EnumType.STRING)
-        private Role role;
-
-    }
-
+    @NonNull
     @EmbeddedId
-    private Id id = new Id();
+    private UserRoleId id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(insertable = false, updatable = false)
-    private Role role;
-
+    public Role getRole() {
+        return id.getRole();
+    }
 }

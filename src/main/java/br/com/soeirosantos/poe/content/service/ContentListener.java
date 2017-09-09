@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ContentListener {
+class ContentListener {
 
     private final CipherService cipherService;
     private final SecretKeyService secretKeyService;

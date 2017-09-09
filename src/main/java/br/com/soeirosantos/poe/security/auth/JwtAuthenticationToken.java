@@ -11,9 +11,9 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     private RawAccessJwtToken rawAccessToken;
     private UserContext userContext;
 
-    public JwtAuthenticationToken(RawAccessJwtToken unsafeToken) {
+    public JwtAuthenticationToken(RawAccessJwtToken rawAccessJwtToken) {
         super(null);
-        this.rawAccessToken = unsafeToken;
+        this.rawAccessToken = rawAccessJwtToken;
         this.setAuthenticated(false);
     }
 

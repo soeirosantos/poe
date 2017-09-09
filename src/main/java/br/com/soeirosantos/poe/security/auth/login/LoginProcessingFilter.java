@@ -1,17 +1,12 @@
 package br.com.soeirosantos.poe.security.auth.login;
 
-import br.com.soeirosantos.poe.security.exception.AuthMethodNotSupportedException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import br.com.soeirosantos.poe.security.auth.login.extractor.AuthenticationExtractor;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,39 +19,22 @@ public class LoginProcessingFilter extends AbstractAuthenticationProcessingFilte
 
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
-    private final ObjectMapper objectMapper;
+    private final AuthenticationExtractor extractor;
 
     public LoginProcessingFilter(String defaultProcessUrl,
         AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler,
-        ObjectMapper mapper) {
+        AuthenticationExtractor extractor) {
         super(defaultProcessUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
-        this.objectMapper = mapper;
+        this.extractor = extractor;
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
         HttpServletResponse response)
         throws AuthenticationException, IOException, ServletException {
-        if (!HttpMethod.POST.name().equals(request.getMethod())) {
-            if (log.isDebugEnabled()) {
-                log.debug(
-                    "Authentication method not supported. Request method: " + request.getMethod());
-            }
-            throw new AuthMethodNotSupportedException("Authentication method not supported");
-        }
-
-        LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
-
-        if (StringUtils.isBlank(loginRequest.getUsername())
-            || StringUtils.isBlank(loginRequest.getPassword())) {
-            throw new AuthenticationServiceException("Username or Password not provided");
-        }
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-            loginRequest.getUsername(), loginRequest.getPassword());
-
+        Authentication token = extractor.extract(request);
         return this.getAuthenticationManager().authenticate(token);
     }
 

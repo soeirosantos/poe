@@ -8,7 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -61,7 +61,7 @@ public class JwtTokenFactory {
         LocalDateTime currentTime = LocalDateTime.now();
 
         Claims claims = Jwts.claims().setSubject(userContext.getUsername());
-        claims.put("scopes", Arrays.asList(Scopes.REFRESH_TOKEN.authority()));
+        claims.put("scopes", Collections.singletonList(Scopes.REFRESH_TOKEN.authority()));
 
         String token = Jwts.builder().setClaims(claims)
             .setIssuer(properties.getSecurity().getTokenIssuer())

@@ -57,11 +57,12 @@ class RefreshTokenResource {
         User user = userService.getByUsername(subject)
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + subject));
 
-      if (user.getRoles() == null) {
-        throw new InsufficientAuthenticationException("User has no roles assigned");
-      }
+        if (!user.hasRoles()) {
+            throw new InsufficientAuthenticationException("User has no roles assigned");
+        }
+
         List<GrantedAuthority> authorities = user.getRoles().stream()
-            .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
+            .map(role -> new SimpleGrantedAuthority(role.authority()))
             .collect(Collectors.toList());
 
         UserContext userContext = UserContext.create(user.getUsername(), authorities);

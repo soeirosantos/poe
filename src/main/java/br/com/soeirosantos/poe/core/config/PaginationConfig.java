@@ -6,7 +6,7 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
 
 @Configuration
-public class PaginationConfig extends SpringDataWebConfiguration {
+class PaginationConfig extends SpringDataWebConfiguration {
 
     private static final int MAX_PAGE_SIZE = 200;
 

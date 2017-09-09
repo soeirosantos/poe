@@ -16,11 +16,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 @AllArgsConstructor
 public class RawAccessJwtToken implements JwtToken {
 
-    private String token;
+    private final String token;
 
     public Jws<Claims> parseClaims(String signingKey) {
         try {
-            return Jwts.parser().setSigningKey(signingKey).parseClaimsJws(this.token);
+            return Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token);
         } catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException
             | SignatureException ex) {
             log.error("Invalid JWT Token", ex);

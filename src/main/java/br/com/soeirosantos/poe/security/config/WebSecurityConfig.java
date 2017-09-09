@@ -1,14 +1,14 @@
 package br.com.soeirosantos.poe.security.config;
 
-import br.com.soeirosantos.poe.security.auth.login.LoginAuthenticationProvider;
-import br.com.soeirosantos.poe.security.auth.login.LoginProcessingFilter;
 import br.com.soeirosantos.poe.security.auth.jwt.JwtAuthenticationProvider;
 import br.com.soeirosantos.poe.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
 import br.com.soeirosantos.poe.security.auth.jwt.SkipPathRequestMatcher;
 import br.com.soeirosantos.poe.security.auth.jwt.extractor.TokenExtractor;
+import br.com.soeirosantos.poe.security.auth.login.LoginAuthenticationProvider;
+import br.com.soeirosantos.poe.security.auth.login.LoginProcessingFilter;
+import br.com.soeirosantos.poe.security.auth.login.extractor.AuthenticationExtractor;
 import br.com.soeirosantos.poe.security.domain.entity.Role;
 import br.com.soeirosantos.poe.security.rest.RestAuthenticationEntryPoint;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,29 +54,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private TokenExtractor tokenExtractor;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationExtractor authenticationExtractor;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    protected LoginProcessingFilter buildAjaxLoginProcessingFilter() {
-        LoginProcessingFilter filter = new LoginProcessingFilter(
-            FORM_BASED_LOGIN_ENTRY_POINT,
-            successHandler, failureHandler, objectMapper);
-        filter.setAuthenticationManager(this.authenticationManager);
-        return filter;
-    }
-
-    protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() {
-        List<String> pathsToSkip =
-            Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
-        SkipPathRequestMatcher matcher =
-            new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
-        JwtTokenAuthenticationProcessingFilter filter =
-            new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
-        filter.setAuthenticationManager(this.authenticationManager);
-        return filter;
-    }
+    private AuthenticationManager authenticationManager;
 
     @Bean
     @Override
@@ -114,5 +95,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(),
                     UsernamePasswordAuthenticationFilter.class);
+    }
+
+    private LoginProcessingFilter buildAjaxLoginProcessingFilter() {
+        LoginProcessingFilter filter = new LoginProcessingFilter(
+            FORM_BASED_LOGIN_ENTRY_POINT,
+            successHandler, failureHandler, authenticationExtractor);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
+
+    private JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() {
+        List<String> pathsToSkip =
+            Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
+        SkipPathRequestMatcher matcher =
+            new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        JwtTokenAuthenticationProcessingFilter filter =
+            new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
     }
 }
