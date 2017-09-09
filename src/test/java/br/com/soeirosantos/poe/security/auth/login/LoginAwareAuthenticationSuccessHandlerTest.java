@@ -4,18 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import br.com.soeirosantos.poe.security.domain.entity.Role;
 import br.com.soeirosantos.poe.security.model.UserContext;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
