@@ -42,7 +42,14 @@ public class User {
     private List<UserRole> roles;
 
     public Set<Role> getRoles() {
+        if (roles == null) {
+            roles = new ArrayList<>();
+        }
         return roles.stream().map(ur -> ur.getRole()).collect(Collectors.toSet());
+    }
+
+    public boolean hasRoles() {
+        return roles != null && !roles.isEmpty();
     }
 
     public void addRole(Role role) {

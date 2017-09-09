@@ -45,7 +45,7 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
                 "Authentication Failed. Username or Password not valid.");
         }
 
-        if (user.getRoles() == null) {
+        if (!user.hasRoles()) {
             throw new InsufficientAuthenticationException("User has no roles assigned");
         }
 

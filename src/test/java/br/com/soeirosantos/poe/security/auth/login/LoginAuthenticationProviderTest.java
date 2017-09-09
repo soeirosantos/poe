@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,10 +44,34 @@ public class LoginAuthenticationProviderTest {
         assertThat(authenticated.getAuthorities()).size().isEqualTo(1);
     }
 
+    @Test(expected = InsufficientAuthenticationException.class)
+    public void failAuthenticationWithoutRoles() {
+        given(userService.getByUsername(USERNAME)).willReturn(getUserWithoutRoles());
+        Authentication auth = new UsernamePasswordAuthenticationToken(USERNAME, PASSWORD);
+        authenticationProvider.authenticate(auth);
+    }
+
+    @Test(expected = BadCredentialsException.class)
+    public void failAuthenticationWithBadCredentials() {
+        given(userService.getByUsername(USERNAME)).willReturn(getUserWithBadCredentials());
+        Authentication auth = new UsernamePasswordAuthenticationToken(USERNAME, PASSWORD);
+        authenticationProvider.authenticate(auth);
+    }
+
     private Optional<User> getUser() {
         User user = new User(USERNAME, encoder.encode(PASSWORD));
         user.addRole(Role.ADMIN);
         return Optional.of(user);
     }
 
+    private Optional<User> getUserWithoutRoles() {
+        User user = new User(USERNAME, encoder.encode(PASSWORD));
+        return Optional.of(user);
+    }
+
+    private Optional<User> getUserWithBadCredentials() {
+        User user = new User(USERNAME, encoder.encode("foo"));
+        user.addRole(Role.ADMIN);
+        return Optional.of(user);
+    }
 }
