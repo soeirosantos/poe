@@ -59,25 +59,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ObjectMapper objectMapper;
 
-    protected LoginProcessingFilter buildAjaxLoginProcessingFilter() {
-        LoginProcessingFilter filter = new LoginProcessingFilter(
-            FORM_BASED_LOGIN_ENTRY_POINT,
-            successHandler, failureHandler, objectMapper);
-        filter.setAuthenticationManager(this.authenticationManager);
-        return filter;
-    }
-
-    protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() {
-        List<String> pathsToSkip =
-            Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
-        SkipPathRequestMatcher matcher =
-            new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
-        JwtTokenAuthenticationProcessingFilter filter =
-            new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
-        filter.setAuthenticationManager(this.authenticationManager);
-        return filter;
-    }
-
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -114,5 +95,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(),
                     UsernamePasswordAuthenticationFilter.class);
+    }
+
+    private LoginProcessingFilter buildAjaxLoginProcessingFilter() {
+        LoginProcessingFilter filter = new LoginProcessingFilter(
+            FORM_BASED_LOGIN_ENTRY_POINT,
+            successHandler, failureHandler, objectMapper);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
+
+    private JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() {
+        List<String> pathsToSkip =
+            Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
+        SkipPathRequestMatcher matcher =
+            new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        JwtTokenAuthenticationProcessingFilter filter =
+            new JwtTokenAuthenticationProcessingFilter(failureHandler, tokenExtractor, matcher);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
     }
 }

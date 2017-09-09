@@ -12,14 +12,14 @@ import org.junit.Test;
 
 public class NotesITest {
 
-    public static final String NOTES_RESOURCE = "/api/notes";
-    public static final String DECRYPT_NOTES_RESOURCE = "/api/notes/{id}/decrypt";
-    public static final String NOTES_RESOURCE_SINGLE = "/api/notes/{id}";
-    public static final String NOTE_TITLE = "my note";
-    public static final String ENCRYPTED_CONTENT = "hAnbjmndH9Nlsovao3KpnBxr5uI+EtaABabjbnFvsp4=";
-    public static final String SOME_FAKE_CONTENT_TOKEN = "123";
-    public static final String NOTE_CONTENT = "adding some note to my API";
-    public static final String X_CONTENT_TOKEN = "X-ContentToken";
+    private static final String NOTES_RESOURCE = "/api/notes";
+    private static final String DECRYPT_NOTES_RESOURCE = "/api/notes/{id}/decrypt";
+    private static final String NOTES_RESOURCE_SINGLE = "/api/notes/{id}";
+    private static final String NOTE_TITLE = "my note";
+    private static final String ENCRYPTED_CONTENT = "hAnbjmndH9Nlsovao3KpnBxr5uI+EtaABabjbnFvsp4=";
+    private static final String SOME_FAKE_CONTENT_TOKEN = "123";
+    private static final String NOTE_CONTENT = "adding some note to my API";
+    private static final String X_CONTENT_TOKEN = "X-ContentToken";
 
     @Test
     public void

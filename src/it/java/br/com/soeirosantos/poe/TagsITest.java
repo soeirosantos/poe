@@ -14,8 +14,8 @@ import org.junit.Test;
 
 public class TagsITest {
 
-    public static final String NOTES_RESOURCE = "/api/notes";
-    public static final String NOTES_TAGS_RESOURCE = "/api/notes/{id}/tags";
+    private static final String NOTES_RESOURCE = "/api/notes";
+    private static final String NOTES_TAGS_RESOURCE = "/api/notes/{id}/tags";
 
     @Test
     public void

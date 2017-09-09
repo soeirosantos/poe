@@ -41,7 +41,7 @@ public class GenericController<T extends AbstractEntity<ID>, ID extends Serializ
     public ResponseEntity<?> save(@Valid @RequestBody T entity,
         @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         publisher.publishEvent(new EncryptContentEvent(entity.getContent(), token));
-        return new ResponseEntity<T>(repository.save(entity), HttpStatus.CREATED);
+        return new ResponseEntity<>(repository.save(entity), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

@@ -48,7 +48,7 @@ class LoginAwareAuthenticationSuccessHandler implements AuthenticationSuccessHan
         clearAuthenticationAttributes(request);
     }
 
-    protected final void clearAuthenticationAttributes(HttpServletRequest request) {
+    private final void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return;

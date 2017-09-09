@@ -61,7 +61,7 @@ class RefreshTokenResource {
         throw new InsufficientAuthenticationException("User has no roles assigned");
       }
         List<GrantedAuthority> authorities = user.getRoles().stream()
-            .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
+            .map(role -> new SimpleGrantedAuthority(role.authority()))
             .collect(Collectors.toList());
 
         UserContext userContext = UserContext.create(user.getUsername(), authorities);

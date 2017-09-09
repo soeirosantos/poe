@@ -19,8 +19,8 @@ public class RefreshToken implements JwtToken {
         Jws<Claims> claims = token.parseClaims(signingKey);
 
         List<String> scopes = claims.getBody().get("scopes", List.class);
-        if (scopes == null || scopes.isEmpty() || !scopes.stream()
-            .anyMatch(scope -> Scopes.REFRESH_TOKEN.authority().equals(scope))) {
+        if (scopes == null || scopes.isEmpty() || scopes.stream()
+            .noneMatch(scope -> Scopes.REFRESH_TOKEN.authority().equals(scope))) {
             return Optional.empty();
         }
 

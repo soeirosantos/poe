@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/tags/{name}")
-public class TagController {
+class TagController {
 
     private final NoteRepository noteRepository;
     private final UserContextService userContextService;
 
-    public TagController(NoteRepository noteRepository,
+    TagController(NoteRepository noteRepository,
         UserContextService userContextService) {
         this.noteRepository = noteRepository;
         this.userContextService = userContextService;

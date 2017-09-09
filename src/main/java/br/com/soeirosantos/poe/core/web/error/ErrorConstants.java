@@ -1,6 +1,6 @@
 package br.com.soeirosantos.poe.core.web.error;
 
-public final class ErrorConstants {
+final class ErrorConstants {
 
     public static final String ERR_VALIDATION = "error.Validation";
     public static final String ERR_METHOD_NOT_SUPPORTED = "error.MethodNotSupported";
