@@ -6,7 +6,7 @@ import br.com.soeirosantos.poe.security.auth.jwt.SkipPathRequestMatcher;
 import br.com.soeirosantos.poe.security.auth.jwt.extractor.TokenExtractor;
 import br.com.soeirosantos.poe.security.auth.login.LoginAuthenticationProvider;
 import br.com.soeirosantos.poe.security.auth.login.LoginProcessingFilter;
-import br.com.soeirosantos.poe.security.auth.login.UsernamePasswordExtractor;
+import br.com.soeirosantos.poe.security.auth.login.extractor.AuthenticationExtractor;
 import br.com.soeirosantos.poe.security.domain.entity.Role;
 import br.com.soeirosantos.poe.security.rest.RestAuthenticationEntryPoint;
 import java.util.Arrays;
@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private TokenExtractor tokenExtractor;
 
     @Autowired
-    private UsernamePasswordExtractor usernamePasswordExtractor;
+    private AuthenticationExtractor authenticationExtractor;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -100,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private LoginProcessingFilter buildAjaxLoginProcessingFilter() {
         LoginProcessingFilter filter = new LoginProcessingFilter(
             FORM_BASED_LOGIN_ENTRY_POINT,
-            successHandler, failureHandler, usernamePasswordExtractor);
+            successHandler, failureHandler, authenticationExtractor);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }

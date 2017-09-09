@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
+import br.com.soeirosantos.poe.security.auth.login.extractor.AuthenticationExtractor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
@@ -24,10 +25,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class UsernamePasswordExtractorTest {
 
-    protected static final String USERNAME = "foo";
-    protected static final String PASSWORD = "bar";
+    private static final String USERNAME = "foo";
+    private static final String PASSWORD = "bar";
+
     @Autowired
-    private UsernamePasswordExtractor usernamePasswordExtractor;
+    private AuthenticationExtractor authenticationExtractor;
 
     @Autowired
     private ObjectMapper mapper;
@@ -38,7 +40,7 @@ public class UsernamePasswordExtractorTest {
         given(request.getMethod()).willReturn(HttpMethod.POST.name());
         given(request.getReader()).willReturn(getLoginRequest());
         Authentication authentication =
-            usernamePasswordExtractor.extract(request);
+            authenticationExtractor.extract(request);
         assertThat(authentication).isNotNull();
         assertThat(authentication.getPrincipal()).isEqualTo(USERNAME);
         assertThat(authentication.getCredentials()).isEqualTo(PASSWORD);

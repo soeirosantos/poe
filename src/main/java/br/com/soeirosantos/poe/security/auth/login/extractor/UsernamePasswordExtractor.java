@@ -1,5 +1,6 @@
-package br.com.soeirosantos.poe.security.auth.login;
+package br.com.soeirosantos.poe.security.auth.login.extractor;
 
+import br.com.soeirosantos.poe.security.auth.login.LoginRequest;
 import br.com.soeirosantos.poe.security.exception.AuthMethodNotSupportedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class UsernamePasswordExtractor {
+public class UsernamePasswordExtractor implements AuthenticationExtractor {
 
     private final ObjectMapper mapper;
 
@@ -22,6 +23,7 @@ public class UsernamePasswordExtractor {
         this.mapper = mapper;
     }
 
+    @Override
     public Authentication extract(HttpServletRequest request) throws IOException {
 
         if (!HttpMethod.POST.name().equals(request.getMethod())) {

@@ -1,17 +1,12 @@
 package br.com.soeirosantos.poe.security.auth.login;
 
-import br.com.soeirosantos.poe.security.exception.AuthMethodNotSupportedException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import br.com.soeirosantos.poe.security.auth.login.extractor.AuthenticationExtractor;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,11 +19,11 @@ public class LoginProcessingFilter extends AbstractAuthenticationProcessingFilte
 
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
-    private final UsernamePasswordExtractor extractor;
+    private final AuthenticationExtractor extractor;
 
     public LoginProcessingFilter(String defaultProcessUrl,
         AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler,
-        UsernamePasswordExtractor extractor) {
+        AuthenticationExtractor extractor) {
         super(defaultProcessUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
