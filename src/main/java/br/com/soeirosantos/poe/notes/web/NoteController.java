@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping(NoteController.PATH)
 class NoteController {
+
+    protected static final String PATH = "/api/notes";
 
     private final GenericController<Note, Long> genericController;
 
@@ -46,7 +48,7 @@ class NoteController {
 
     @GetMapping("/{id}/decrypt")
     ResponseEntity<?> decrypt(@PathVariable Long id,
-        @RequestHeader(name = ContentToken.HEADER_NAME) String token) {
+        @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         return genericController.decrypt(id, token);
     }
 

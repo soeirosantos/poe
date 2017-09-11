@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/bookmarks")
+@RequestMapping(BookmarkController.PATH)
 class BookmarkController {
+
+    protected static final String PATH = "/api/bookmarks";
 
     private final GenericController<Bookmark, Long> genericController;
 
@@ -37,7 +39,7 @@ class BookmarkController {
     @PostMapping
     ResponseEntity<?> save(
         @Valid @RequestBody Bookmark entity,
-        @RequestHeader(name = ContentToken.HEADER_NAME) String token) {
+        @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         return genericController.save(entity, token);
     }
 
@@ -48,7 +50,7 @@ class BookmarkController {
 
     @GetMapping("/{id}/decrypt")
     ResponseEntity<?> decrypt(@PathVariable Long id,
-        @RequestHeader(name = ContentToken.HEADER_NAME) String token) {
+        @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         return genericController.decrypt(id, token);
     }
 
@@ -61,7 +63,7 @@ class BookmarkController {
     @PutMapping("/{id}")
     ResponseEntity<?> update(@PathVariable Long id,
         @RequestBody Bookmark entity,
-        @RequestHeader(name = ContentToken.HEADER_NAME) String token) {
+        @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         return genericController.update(id, entity, token);
     }
 
