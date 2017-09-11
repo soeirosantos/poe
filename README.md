@@ -1,6 +1,8 @@
 POE - Personal Organizer Environment
 ------------------------------------
 
+[![Build Status](https://travis-ci.org/soeirosantos/poe.svg?branch=master)](https://travis-ci.org/soeirosantos/poe)
+
 A simple application to keep personal data like notes, memos, bookmarks, feed reader, etc.
 
 ## Running locally
