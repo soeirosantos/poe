@@ -52,7 +52,7 @@ public class GenericController<T extends AbstractEntity<ID>, ID extends Serializ
 
     @GetMapping("/{id}/decrypt")
     public ResponseEntity<?> decrypt(@PathVariable ID id,
-        @RequestHeader(name = ContentToken.HEADER_NAME) String token) {
+        @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         throwsErrorIfNotFound(id);
         T entity = repository.findOne(id, userContextService.getUsername());
         publisher.publishEvent(new DecryptContentEvent(entity.getContent(), token));
@@ -68,6 +68,7 @@ public class GenericController<T extends AbstractEntity<ID>, ID extends Serializ
     public ResponseEntity<?> update(@PathVariable ID id, @RequestBody T entity,
         @RequestHeader(required = false, name = ContentToken.HEADER_NAME) String token) {
         throwsErrorIfNotFound(id);
+        entity.setId(id);
         publisher.publishEvent(new EncryptContentEvent(entity.getContent(), token));
         return ResponseEntity.ok(repository.save(entity));
     }

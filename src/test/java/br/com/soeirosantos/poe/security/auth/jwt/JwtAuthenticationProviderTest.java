@@ -32,11 +32,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class JwtAuthenticationProviderTest {
 
-    private static final String TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VybmFtZSIsInNjb3BlcyI6W"
-        + "yJST0xFX0FETUlOIl0sImlzcyI6Imh0dHA6Ly9wb2UuY29tLmJyIiwiaWF0IjoxNTA0OTk3OTAwLCJleHAiOjE1M"
-        + "DQ5OTg4MDB9.gS-hY4EoxoknbXz1gGFz4LKhOr7Pt6K32l27rChNQcvJcVvL4y85pxV3_EA9jpm5OF00Wy3ZGJVz"
-        + "KLobehvhRg";
-
     @Autowired
     private AuthenticationSuccessHandler successHandler;
 

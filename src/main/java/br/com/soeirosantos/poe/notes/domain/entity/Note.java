@@ -13,16 +13,23 @@ import javax.persistence.ManyToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Note extends AbstractEntity<Long> {
 
+    @NonNull
     @NotBlank
     @Size(max = 255)
     private String title;
 
+    @NonNull
     @Embedded
     @Valid
     private Content content;

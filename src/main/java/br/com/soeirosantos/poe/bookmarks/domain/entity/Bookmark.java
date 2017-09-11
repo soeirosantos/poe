@@ -11,13 +11,20 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Bookmark extends AbstractEntity<Long> {
 
+    @NonNull
     private String name;
 
+    @NonNull
     @Embedded
     private Content content;
 

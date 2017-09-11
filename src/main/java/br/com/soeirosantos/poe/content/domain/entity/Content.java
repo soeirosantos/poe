@@ -7,14 +7,14 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 @Getter
+@Setter
 @Embeddable
 public class Content {
 
-    @Setter
     @Size(max = 1000)
     private String body;
 
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private final Boolean encrypted = Boolean.FALSE;
+    private Boolean encrypted = Boolean.FALSE;
 
 }
