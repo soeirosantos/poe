@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 
-    GLOBAL(2),
-    AUTHENTICATION(10),
-    JWT_TOKEN_EXPIRED(11);
+    AUTHENTICATION("Invalid username or password"),
+    BAD_CREDENTIALS("Invalid username or password"),
+    JWT_TOKEN_EXPIRED("Token has expired");
 
-    private int errorCode;
+    private String message;
 
 }

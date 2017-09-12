@@ -34,10 +34,10 @@ class LoginAwareAuthenticationFailureHandler implements AuthenticationFailureHan
 
         if (e instanceof BadCredentialsException) {
             mapper.writeValue(response.getWriter(), ErrorResponse.of(HttpStatus.UNAUTHORIZED,
-                "Invalid username or password", ErrorCode.AUTHENTICATION));
+                ErrorCode.BAD_CREDENTIALS.getMessage(), ErrorCode.BAD_CREDENTIALS));
         } else if (e instanceof JwtExpiredTokenException) {
             mapper.writeValue(response.getWriter(), ErrorResponse.of(HttpStatus.UNAUTHORIZED,
-                "Token has expired", ErrorCode.JWT_TOKEN_EXPIRED));
+                ErrorCode.JWT_TOKEN_EXPIRED.getMessage(), ErrorCode.JWT_TOKEN_EXPIRED));
         } else if (e instanceof AuthMethodNotSupportedException) {
             mapper.writeValue(response.getWriter(),
                 ErrorResponse
@@ -45,7 +45,7 @@ class LoginAwareAuthenticationFailureHandler implements AuthenticationFailureHan
         }
 
         mapper.writeValue(response.getWriter(), ErrorResponse.of(HttpStatus.UNAUTHORIZED,
-            "Authentication failed", ErrorCode.AUTHENTICATION));
+            ErrorCode.AUTHENTICATION.getMessage(), ErrorCode.AUTHENTICATION));
     }
 
 }
