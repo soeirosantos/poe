@@ -18,8 +18,10 @@ import br.com.soeirosantos.poe.bookmarks.domain.repository.BookmarkRepository;
 import br.com.soeirosantos.poe.content.domain.entity.Content;
 import br.com.soeirosantos.poe.content.web.ContentToken;
 import br.com.soeirosantos.poe.security.service.UserContextService;
+import br.com.soeirosantos.poe.tags.domain.entity.Tag;
 import br.com.soeirosantos.poe.util.JacksonUtil;
 import java.util.Collections;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -120,18 +122,31 @@ public class BookmarkControllerTest {
     }
 
     @Test
-    public void addTag() throws Exception {
-        //TODO
+    public void addTagForBookmark() throws Exception {
+        String tagJson = json.write(getTags());
+        mvc.perform(post(BookmarkController.PATH + "/{id}/tags", 1L)
+            .content(tagJson)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
     }
 
     @Test
-    public void getTags() throws Exception {
-        //TODO
+    public void getTagsForBookmark() throws Exception {
+        mvc.perform(get(BookmarkController.PATH + "/{id}/tags", 1L)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
     }
 
     @Test
-    public void removeTags() throws Exception {
-        //TODO
+    public void removeTagsForBookmark() throws Exception {
+        String tagJson = json.write(getTags());
+        mvc.perform(delete(BookmarkController.PATH + "/{id}/tags", 1L)
+            .content(tagJson)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
     }
 
     private Bookmark getBookmark() {
@@ -139,6 +154,10 @@ public class BookmarkControllerTest {
         content.setBody("FOO");
         Bookmark bookmark = new Bookmark("name", content);
         return bookmark;
+    }
+
+    private List<Tag> getTags() {
+        return Collections.singletonList(new Tag("sometag"));
     }
 
 

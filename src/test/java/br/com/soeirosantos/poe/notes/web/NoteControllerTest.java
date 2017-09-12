@@ -18,8 +18,10 @@ import br.com.soeirosantos.poe.content.web.ContentToken;
 import br.com.soeirosantos.poe.notes.domain.entity.Note;
 import br.com.soeirosantos.poe.notes.domain.repository.NoteRepository;
 import br.com.soeirosantos.poe.security.service.UserContextService;
+import br.com.soeirosantos.poe.tags.domain.entity.Tag;
 import br.com.soeirosantos.poe.util.JacksonUtil;
 import java.util.Collections;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -119,18 +121,31 @@ public class NoteControllerTest {
     }
 
     @Test
-    public void addTag() throws Exception {
-        //TODO
+    public void addTagForNote() throws Exception {
+        String tagJson = json.write(getTags());
+        mvc.perform(post(NoteController.PATH + "/{id}/tags", 1L)
+            .content(tagJson)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
     }
 
     @Test
-    public void getTags() throws Exception {
-        //TODO
+    public void getTagsForNote() throws Exception {
+        mvc.perform(get(NoteController.PATH + "/{id}/tags", 1L)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
     }
 
     @Test
-    public void removeTags() throws Exception {
-        //TODO
+    public void removeTagsForNote() throws Exception {
+        String tagJson = json.write(getTags());
+        mvc.perform(delete(NoteController.PATH + "/{id}/tags", 1L)
+            .content(tagJson)
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
     }
 
     private Note getNote() {
@@ -138,6 +153,10 @@ public class NoteControllerTest {
         content.setBody("FOO");
         Note note = new Note("title", content);
         return note;
+    }
+
+    private List<Tag> getTags() {
+        return Collections.singletonList(new Tag("sometag"));
     }
 
 }

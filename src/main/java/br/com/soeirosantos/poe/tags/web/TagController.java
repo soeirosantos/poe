@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/tags/{name}")
+@RequestMapping(TagController.PATH)
 class TagController {
+
+    protected static final String PATH = "/api/tags/{name}";
+    protected static final String NOTES_RESOURCE = "/notes";
 
     private final NoteRepository noteRepository;
     private final UserContextService userContextService;
@@ -21,7 +24,7 @@ class TagController {
         this.userContextService = userContextService;
     }
 
-    @GetMapping("/notes")
+    @GetMapping(NOTES_RESOURCE)
     ResponseEntity<?> getNotes(@PathVariable String name) {
         return ResponseEntity
             .ok(noteRepository.findAllByTagsName(name, userContextService.getUsername()));
