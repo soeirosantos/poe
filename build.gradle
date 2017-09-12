@@ -57,7 +57,7 @@ dependencies {
     compile "commons-codec:commons-codec:${commons_codec_version}"
     compile "io.jsonwebtoken:jjwt:${jjwt_version}"
 
-    compileOnly "org.projectlombok:lombok:${lombok_version}"
+    compile "org.projectlombok:lombok:${lombok_version}"
 
     //test
     testCompile "io.rest-assured:rest-assured:${rest_assured_version}"
