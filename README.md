@@ -7,7 +7,7 @@ A simple _(in-progress)_ application to keep personal data like notes, memos, bo
 
 ## Running locally
 
-`$ git clone https://bitbucket.org/soeirosantos/poe.git`
+`$ git clone https://github.com/soeirosantos/soeirosantos/poe.git`
 
 `$ ./gradlew clean build && java -jar build/libs/poe-1.0.0-SNAPSHOT.jar`
 
